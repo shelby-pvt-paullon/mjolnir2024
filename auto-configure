@@ -1,0 +1,15 @@
+#!/bin/bash
+mjolnir_random=`cat /dev/urandom | tr -dc a-z0-3 | head -c 5`
+birfrost_random=`cat /dev/urandom | tr -dc a-z0-3 | head -c 5`
+filetype=`cat /dev/urandom | tr -dc a-z | head -c 3`
+
+#生成随机文件名的配置文件
+echo 'mjolnir='"$mjolnir_random"'.'"$filetype" >> /config
+echo 'birfrost='"$birfrost_random"'.'"$filetype" >> /config
+
+#导入环境变量
+source /config
+
+#开始更名
+mv elf-mjolnir /usr/bin/"$mjolnir" && chmod +x /usr/bin/"$mjolnir"
+mv elf-birfrost /usr/bin/"$birfrost" && chmod +x /usr/bin/"$birfrost"

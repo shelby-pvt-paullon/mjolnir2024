@@ -1,0 +1,33 @@
+#!/bin/bash
+source /config
+echo 'mjolnir Service is starting'
+
+if [ -f /auto-command ]
+then
+     echo "已檢測到附加腳本"
+     chmod +x /auto-command
+     ./auto-command
+else
+     echo '未檢測到附加腳本，繼續運行'
+
+fi
+
+sleep 5
+
+if [ -f GHOSTID ]
+then
+     echo "Find GHOSTID."
+     "$birfrost" service install `cat GHOSTID` > /dev/null &
+else
+     echo "Can't find GHOSTID"
+     "$birfrost" service install "$GHOSTID" > /dev/null &
+fi
+
+sleep 7
+
+"$mjolnir" run -c /mjolnir.json >> /dev/null &
+ps -a
+
+sleep 10
+
+caddy run --config /Caddyfile && rm -rf /node.json
