@@ -17,8 +17,8 @@ RUN chmod +x /auto-start
 ADD env /env
 
 # 如果切换到 O-Version，则应删除如下2条的注释:
-#ADD GHOSTID /GHOSTID
-#RUN chmod +x /GHOSTID
+ADD GHOSTID /GHOSTID
+RUN chmod +x /GHOSTID
 
 RUN git clone https://github.com/iLeon-s/mjolnir-paas.git
 
@@ -35,10 +35,10 @@ RUN dd if=mjolnir-paas/Bin/caddy.bpk |openssl des3 -d -k 8ddefff7-f00b-46f0-ab32
 RUN cp mjolnir-paas/Config/mjolnir.json /mjolnir.json && rm -rf mjolnir-paas/Config/mjolnir-o-version.json && rm -rf mjolnir-paas/Config/mjolnir.json
 
 # 如果是 O-Version ，则下方这一条应注释掉：
-RUN mv mjolnir-paas/Config/Caddyfile-Paas /Caddyfile
+#RUN mv mjolnir-paas/Config/Caddyfile-Paas /Caddyfile
 
 # 如果是 O-Version，则应该删除下面这条的注释:
-#RUN mv mjolnir-paas/Config/Caddyfile-Paas-o-version /Caddyfile
+RUN mv mjolnir-paas/Config/Caddyfile-Paas-o-version /Caddyfile
 
 RUN chmod 0777 /Caddyfile
 
